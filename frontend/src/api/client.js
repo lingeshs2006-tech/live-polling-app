@@ -53,7 +53,9 @@ export function getVoterId() {
 
 // WebSocket URL for live poll updates.
 export function wsUrl(pollId) {
-  const protocol = window.location.protocol === 'https:' ? 'wss' : 'ws'
+  const base = import.meta.env.VITE_API_BASE || window.location.origin
+  const protocol = base.startsWith('https://') ? 'wss' : 'ws'
+  const host = base.replace(/^https?:\/\//, '')
 
-  return `${protocol}://${window.location.host}/ws?poll=${pollId}`
+  return `${protocol}://${host}/ws?poll=${pollId}`
 }
